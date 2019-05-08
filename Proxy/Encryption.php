@@ -18,12 +18,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Leevel\Encryption\Facade;
+namespace Leevel\Encryption\Proxy;
 
 use Leevel\Di\Container;
 
 /**
- * 门面 encryption.
+ * 代理 encryption.
  *
  * @author Xiangmin Liu <635750556@qq.com>
  *
