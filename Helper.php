@@ -18,37 +18,40 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Leevel\Encryption\Proxy;
+namespace Leevel\Encryption;
+
+use function Leevel\Support\Str\un_camelize;
+use Leevel\Support\Str\un_camelize;
 
 /**
- * 代理 encryption 接口.
+ * 助手类.
  *
  * @author Xiangmin Liu <635750556@qq.com>
  *
- * @since 2019.05.26
+ * @since 2019.08.21
  *
  * @version 1.0
- *
- * @see \Leevel\Encryption\IEncryption 请保持接口设计的一致
  */
-interface IEncryption
+class Helper
 {
     /**
-     * 加密.
+     * call.
      *
-     * @param string $value
-     * @param int    $expiry
+     * @param string $method
+     * @param array  $args
      *
-     * @return string
+     * @return mixed
      */
-    public static function encrypt(string $value, int $expiry = 0): string;
+    public static function __callStatic(string $method, array $args)
+    {
+        $fn = __NAMESPACE__.'\\Helper\\'.un_camelize($method);
+        if (!function_exists($fn)) {
+            class_exists($fn);
+        }
 
-    /**
-     * 解密.
-     *
-     * @param string $value
-     *
-     * @return string
-     */
-    public static function decrypt(string $value): string;
+        return $fn(...$args);
+    }
 }
+
+// import fn.
+class_exists(un_camelize::class);
